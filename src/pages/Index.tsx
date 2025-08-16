@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import HumanoidSection from "@/components/HumanoidSection";
@@ -13,6 +13,8 @@ import MadeByHumans from "@/components/MadeByHumans";
 import Footer from "@/components/Footer";
 
 const Index = () => {
+  const parallaxRef = useRef<HTMLDivElement>(null);
+
   // Initialize intersection observer to detect when elements enter viewport
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -33,6 +35,30 @@ const Index = () => {
     return () => {
       elements.forEach((el) => observer.unobserve(el));
     };
+  }, []);
+
+  // Parallax scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * -0.5;
+      const rate2 = scrolled * -0.3;
+      const rate3 = scrolled * -0.7;
+
+      // Apply parallax to different layers
+      const parallaxElements = document.querySelectorAll('.parallax-bg');
+      parallaxElements.forEach((element, index) => {
+        const rates = [rate, rate2, rate3];
+        const currentRate = rates[index % 3] || rate;
+        (element as HTMLElement).style.transform = `translateY(${currentRate}px)`;
+      });
+    };
+
+    // Only enable parallax on desktop for better performance
+    if (window.innerWidth > 768) {
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
   }, []);
 
   useEffect(() => {
@@ -59,20 +85,44 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      <main className="space-y-4 sm:space-y-8"> {/* Reduced space on mobile */}
-        <Hero />
-        <HumanoidSection />
-        <SpecsSection />
-        <DetailsSection />
-        <ImageShowcaseSection />
-        <Features />
-        <Testimonials />
-        <Newsletter />
-        <MadeByHumans />
-      </main>
-      <Footer />
+    <div className="min-h-screen relative overflow-x-hidden">
+      {/* Parallax Background Layers */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* Background Layer 1 - Slowest */}
+        <div className="parallax-bg absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-primary/20 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute top-96 right-20 w-80 h-80 bg-gradient-to-l from-primary/15 to-transparent rounded-full blur-2xl"></div>
+        </div>
+        
+        {/* Background Layer 2 - Medium */}
+        <div className="parallax-bg absolute inset-0 opacity-10">
+          <div className="absolute top-40 right-10 w-72 h-72 bg-gradient-to-br from-secondary/30 to-transparent rounded-full blur-xl"></div>
+          <div className="absolute top-[800px] left-1/4 w-64 h-64 bg-gradient-to-tr from-accent/25 to-transparent rounded-full blur-2xl"></div>
+        </div>
+        
+        {/* Background Layer 3 - Fastest */}
+        <div className="parallax-bg absolute inset-0 opacity-15">
+          <div className="absolute top-60 left-1/3 w-48 h-48 bg-gradient-to-r from-primary/40 to-transparent rounded-full blur-lg"></div>
+          <div className="absolute top-[1200px] right-1/3 w-56 h-56 bg-gradient-to-l from-muted/30 to-transparent rounded-full blur-xl"></div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10">
+        <Navbar />
+        <main className="space-y-4 sm:space-y-8"> {/* Reduced space on mobile */}
+          <Hero />
+          <HumanoidSection />
+          <SpecsSection />
+          <DetailsSection />
+          <ImageShowcaseSection />
+          <Features />
+          <Testimonials />
+          <Newsletter />
+          <MadeByHumans />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 };
