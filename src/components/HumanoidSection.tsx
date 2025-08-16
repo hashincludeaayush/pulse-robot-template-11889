@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell, BarChart, Bar } from 'recharts';
 
 const HumanoidSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -8,6 +9,31 @@ const HumanoidSection = () => {
   const [isIntersecting, setIsIntersecting] = useState(false);
   const ticking = useRef(false);
   const lastScrollY = useRef(0);
+
+  // Chart data
+  const performanceData = [
+    { month: 'Jan', efficiency: 65, learning: 45, tasks: 120 },
+    { month: 'Feb', efficiency: 72, learning: 58, tasks: 145 },
+    { month: 'Mar', efficiency: 78, learning: 69, tasks: 180 },
+    { month: 'Apr', efficiency: 85, learning: 75, tasks: 220 },
+    { month: 'May', efficiency: 90, learning: 82, tasks: 280 },
+    { month: 'Jun', efficiency: 95, learning: 88, tasks: 340 },
+  ];
+
+  const capabilityData = [
+    { name: 'Navigation', value: 92, color: '#ef4444' },
+    { name: 'Object Recognition', value: 88, color: '#f87171' },
+    { name: 'Task Execution', value: 85, color: '#fca5a5' },
+    { name: 'Human Interaction', value: 78, color: '#fecaca' },
+  ];
+
+  const usageData = [
+    { category: 'Manufacturing', hours: 2400, percentage: 35 },
+    { category: 'Healthcare', hours: 1680, percentage: 25 },
+    { category: 'Logistics', hours: 1344, percentage: 20 },
+    { category: 'Research', hours: 1008, percentage: 15 },
+    { category: 'Other', hours: 336, percentage: 5 },
+  ];
 
   // More responsive timing function with shorter duration
   const cardStyle = {
@@ -116,27 +142,50 @@ const HumanoidSection = () => {
                 opacity: isFirstCardVisible ? 0.9 : 0
               }}
             >
-              <div
-                className="absolute inset-0 z-0 bg-gradient-to-b from-pulse-900/40 to-dark-900/80"
-                style={{
-                  backgroundImage: "url('/background-section1.png')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "top center",
-                  backgroundBlendMode: "overlay"
-                }}
-              ></div>
+              <div className="bg-white/95 backdrop-blur-sm rounded-xl"></div>
               
               <div className="absolute top-4 right-4 z-20">
-                <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white">
-                  <span className="text-sm font-medium">The vision</span>
+                <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-primary/10 backdrop-blur-sm text-primary border border-primary/20">
+                  <span className="text-sm font-medium">Performance Analytics</span>
                 </div>
               </div>
               
-              <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full flex items-center">
-                <div className="max-w-lg">
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-display text-white font-bold leading-tight mb-4">
-                    We're giving AI a way to navigate the physical world
+              <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full">
+                <div className="mb-4">
+                  <h3 className="text-2xl sm:text-3xl font-display text-gray-900 font-bold leading-tight mb-2">
+                    Learning & Efficiency Trends
                   </h3>
+                  <p className="text-gray-600 text-sm">Real-time performance metrics</p>
+                </div>
+                
+                <div className="h-64 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={performanceData}>
+                      <defs>
+                        <linearGradient id="efficiencyGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3}/>
+                          <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
+                        </linearGradient>
+                        <linearGradient id="learningGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#f87171" stopOpacity={0.3}/>
+                          <stop offset="95%" stopColor="#f87171" stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                      <XAxis dataKey="month" stroke="#6b7280" fontSize={12} />
+                      <YAxis stroke="#6b7280" fontSize={12} />
+                      <Tooltip 
+                        contentStyle={{ 
+                          backgroundColor: 'white', 
+                          border: '1px solid #e5e7eb', 
+                          borderRadius: '8px',
+                          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                        }} 
+                      />
+                      <Area type="monotone" dataKey="efficiency" stroke="#ef4444" fillOpacity={1} fill="url(#efficiencyGradient)" strokeWidth={2} />
+                      <Area type="monotone" dataKey="learning" stroke="#f87171" fillOpacity={1} fill="url(#learningGradient)" strokeWidth={2} />
+                    </AreaChart>
+                  </ResponsiveContainer>
                 </div>
               </div>
             </div>
@@ -152,27 +201,39 @@ const HumanoidSection = () => {
                 pointerEvents: isSecondCardVisible ? 'auto' : 'none'
               }}
             >
-              <div
-                className="absolute inset-0 z-0 bg-gradient-to-b from-pulse-900/40 to-dark-900/80"
-                style={{
-                  backgroundImage: "url('/background-section2.png')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundBlendMode: "overlay"
-                }}
-              ></div>
+              <div className="bg-white/95 backdrop-blur-sm rounded-xl"></div>
               
               <div className="absolute top-4 right-4 z-20">
-                <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white">
-                  <span className="text-sm font-medium">The vision</span>
+                <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-primary/10 backdrop-blur-sm text-primary border border-primary/20">
+                  <span className="text-sm font-medium">Capability Analysis</span>
                 </div>
               </div>
               
-              <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full flex items-center">
-                <div className="max-w-lg">
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-display text-white font-bold leading-tight mb-4">
-                    We're bringing adaptive intelligence to where humans work
+              <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full">
+                <div className="mb-4">
+                  <h3 className="text-2xl sm:text-3xl font-display text-gray-900 font-bold leading-tight mb-2">
+                    Core Capabilities
                   </h3>
+                  <p className="text-gray-600 text-sm">AI-powered skill assessments</p>
+                </div>
+                
+                <div className="h-64 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={capabilityData} layout="horizontal">
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                      <XAxis type="number" domain={[0, 100]} stroke="#6b7280" fontSize={12} />
+                      <YAxis dataKey="name" type="category" stroke="#6b7280" fontSize={12} width={120} />
+                      <Tooltip 
+                        contentStyle={{ 
+                          backgroundColor: 'white', 
+                          border: '1px solid #e5e7eb', 
+                          borderRadius: '8px',
+                          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                        }} 
+                      />
+                      <Bar dataKey="value" fill="#ef4444" radius={[0, 4, 4, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
                 </div>
               </div>
             </div>
@@ -188,27 +249,49 @@ const HumanoidSection = () => {
                 pointerEvents: isThirdCardVisible ? 'auto' : 'none'
               }}
             >
-              <div
-                className="absolute inset-0 z-0 bg-gradient-to-b from-pulse-900/40 to-dark-900/80"
-                style={{
-                  backgroundImage: "url('/background-section3.png')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "bottom center",
-                  backgroundBlendMode: "overlay"
-                }}
-              ></div>
+              <div className="bg-white/95 backdrop-blur-sm rounded-xl"></div>
               
               <div className="absolute top-4 right-4 z-20">
-                <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white">
-                  <span className="text-sm font-medium">The vision</span>
+                <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-primary/10 backdrop-blur-sm text-primary border border-primary/20">
+                  <span className="text-sm font-medium">Usage Statistics</span>
                 </div>
               </div>
               
-              <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full flex items-center">
-                <div className="max-w-lg">
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-display text-white font-bold leading-tight mb-4">
-                    We're creating companions, <span className="text-[#FC4D0A]">not replacements</span>
+              <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full">
+                <div className="mb-4">
+                  <h3 className="text-2xl sm:text-3xl font-display text-gray-900 font-bold leading-tight mb-2">
+                    Industry Applications
                   </h3>
+                  <p className="text-gray-600 text-sm">Deployment across sectors</p>
+                </div>
+                
+                <div className="h-64 w-full flex items-center justify-center">
+                  <ResponsiveContainer width="80%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={usageData}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={60}
+                        outerRadius={100}
+                        paddingAngle={5}
+                        dataKey="percentage"
+                      >
+                        {usageData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={['#ef4444', '#f87171', '#fca5a5', '#fecaca', '#fee2e2'][index]} />
+                        ))}
+                      </Pie>
+                      <Tooltip 
+                        contentStyle={{ 
+                          backgroundColor: 'white', 
+                          border: '1px solid #e5e7eb', 
+                          borderRadius: '8px',
+                          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                        }} 
+                        formatter={(value, name, props) => [`${value}%`, props.payload.category]}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
                 </div>
               </div>
             </div>
