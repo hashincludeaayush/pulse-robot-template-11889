@@ -88,11 +88,12 @@ const Hero = () => {
   
   return (
     <section 
-      className="overflow-hidden relative bg-cover" 
+      className="overflow-hidden relative bg-cover bg-center bg-no-repeat" 
       id="hero" 
       style={{
-        backgroundImage: 'url("/Header-background.webp")',
-        backgroundPosition: 'center 30%', 
+        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), url("/hero-image.jpg")',
+        backgroundPosition: 'center center', 
+        backgroundSize: 'cover',
         padding: isMobile ? '100px 12px 40px' : '120px 20px 60px'
       }}
     >
