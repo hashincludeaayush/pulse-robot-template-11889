@@ -121,12 +121,12 @@ const HumanoidSection = () => {
               <div className="pulse-chip opacity-0 animate-fade-in" style={{
                 animationDelay: "0.1s"
               }}>
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">02</span>
+                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary text-primary-foreground mr-2">02</span>
                 <span>Humanoid</span>
               </div>
             </div>
             
-            <h2 className="section-title text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-1 md:mb-2">
+            <h2 className="section-title text-3xl sm:text-4xl md:text-5xl  font-bold mb-1 md:mb-2">
               Why Humanoid
             </h2>
           </div>
@@ -152,7 +152,7 @@ const HumanoidSection = () => {
               
               <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full">
                 <div className="mb-4">
-                  <h3 className="text-2xl sm:text-3xl font-display text-gray-900 font-bold leading-tight mb-2">
+                  <h3 className="text-2xl sm:text-3xl  text-gray-900 font-bold leading-tight mb-2">
                     Learning & Efficiency Trends
                   </h3>
                   <p className="text-gray-600 text-sm">Real-time performance metrics</p>
@@ -211,7 +211,7 @@ const HumanoidSection = () => {
               
               <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full">
                 <div className="mb-4">
-                  <h3 className="text-2xl sm:text-3xl font-display text-gray-900 font-bold leading-tight mb-2">
+                  <h3 className="text-2xl sm:text-3xl  text-gray-900 font-bold leading-tight mb-2">
                     Core Capabilities
                   </h3>
                   <p className="text-gray-600 text-sm">AI-powered skill assessments</p>
@@ -259,7 +259,7 @@ const HumanoidSection = () => {
               
               <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full">
                 <div className="mb-4">
-                  <h3 className="text-2xl sm:text-3xl font-display text-gray-900 font-bold leading-tight mb-2">
+                  <h3 className="text-2xl sm:text-3xl  text-gray-900 font-bold leading-tight mb-2">
                     Industry Applications
                   </h3>
                   <p className="text-gray-600 text-sm">Deployment across sectors</p>
