@@ -74,7 +74,7 @@ const Index = () => {
   useEffect(() => {
     // This helps ensure smooth scrolling for the anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
+      anchor.addEventListener('click', function (this: HTMLAnchorElement, e) {
         e.preventDefault();
         
         const targetId = this.getAttribute('href')?.substring(1);
