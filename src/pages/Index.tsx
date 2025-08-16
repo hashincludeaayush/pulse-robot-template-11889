@@ -37,26 +37,36 @@ const Index = () => {
     };
   }, []);
 
-  // Parallax scroll effect
+  // Enhanced parallax scroll effect for both background and content
   useEffect(() => {
     const handleScroll = () => {
       const scrolled = window.pageYOffset;
+      
+      // Background parallax layers
       const rate = scrolled * -0.5;
       const rate2 = scrolled * -0.3;
       const rate3 = scrolled * -0.7;
 
-      // Apply parallax to different layers
-      const parallaxElements = document.querySelectorAll('.parallax-bg');
-      parallaxElements.forEach((element, index) => {
+      const parallaxBgElements = document.querySelectorAll('.parallax-bg');
+      parallaxBgElements.forEach((element, index) => {
         const rates = [rate, rate2, rate3];
         const currentRate = rates[index % 3] || rate;
         (element as HTMLElement).style.transform = `translateY(${currentRate}px)`;
+      });
+
+      // Content parallax sections
+      const parallaxElements = document.querySelectorAll('.parallax[data-speed]');
+      parallaxElements.forEach(el => {
+        const element = el as HTMLElement;
+        const speed = parseFloat(element.dataset.speed || '0.1');
+        const yPos = -scrolled * speed;
+        element.style.transform = `translateY(${yPos}px)`;
       });
     };
 
     // Only enable parallax on desktop for better performance
     if (window.innerWidth > 768) {
-      window.addEventListener('scroll', handleScroll);
+      window.addEventListener('scroll', handleScroll, { passive: true });
       return () => window.removeEventListener('scroll', handleScroll);
     }
   }, []);
@@ -111,15 +121,33 @@ const Index = () => {
       <div className="relative z-10">
         <Navbar />
         <main className="space-y-4 sm:space-y-8"> {/* Reduced space on mobile */}
-          <Hero />
-          <HumanoidSection />
-          <SpecsSection />
-          <DetailsSection />
-          <ImageShowcaseSection />
-          <Features />
-          <Testimonials />
-          <Newsletter />
-          <MadeByHumans />
+          <div className="parallax" data-speed="0.1">
+            <Hero />
+          </div>
+          <div className="parallax" data-speed="0.15">
+            <HumanoidSection />
+          </div>
+          <div className="parallax" data-speed="0.08">
+            <SpecsSection />
+          </div>
+          <div className="parallax" data-speed="0.12">
+            <DetailsSection />
+          </div>
+          <div className="parallax" data-speed="0.05">
+            <ImageShowcaseSection />
+          </div>
+          <div className="parallax" data-speed="0.18">
+            <Features />
+          </div>
+          <div className="parallax" data-speed="0.1">
+            <Testimonials />
+          </div>
+          <div className="parallax" data-speed="0.14">
+            <Newsletter />
+          </div>
+          <div className="parallax" data-speed="0.07">
+            <MadeByHumans />
+          </div>
         </main>
         <Footer />
       </div>

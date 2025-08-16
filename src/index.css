@@ -224,16 +224,26 @@
   transition: none;
 }
 
+/* Content parallax sections */
+.parallax[data-speed] {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transition: none;
+}
+
 /* Optimize parallax performance */
 @media (prefers-reduced-motion: reduce) {
-  .parallax-bg {
+  .parallax-bg,
+  .parallax[data-speed] {
     transform: none !important;
   }
 }
 
 /* Desktop-only parallax for better mobile performance */
 @media (max-width: 768px) {
-  .parallax-bg {
+  .parallax-bg,
+  .parallax[data-speed] {
     transform: none !important;
   }
 }
